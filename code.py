@@ -12,10 +12,14 @@ import sys
 
 __author__ = "Russell Livermore"
 
+# initializes difficulty variable
 difficulty = "easy"
 
 
 def getNumbers(param):
+    # gets the numbers from the api
+    # param 1 is for initializating numbers variable
+    # 2, 3, and 4 are easy, medium, and hard respectively
     if param == 1:
         pass
     if param == 2:
@@ -35,6 +39,7 @@ def getNumbers(param):
         return num
 
 
+# initialization for rest of variables
 numbers = getNumbers(1)
 attempts = 10
 guessHist = []
@@ -51,6 +56,7 @@ def commands():
     menu_entry_index = terminal_menu.show()
     if options[menu_entry_index] == "quit":
         print("Goodbye!")
+        time.sleep(1)
         exit()
     elif options[menu_entry_index] == "history":
         if len(guessHist) == 0:
@@ -66,6 +72,23 @@ def commands():
     elif options[menu_entry_index] == "restart":
         attempts = 10
         startGame()
+
+
+def preStart():
+    # help menu for before the game is started
+    print(figlet_format("Menu", font='smkeyboard'))
+    options = ["start", "quit", "difficulty"]
+    terminal_menu = TerminalMenu(options)
+    menu_entry_index = terminal_menu.show()
+    if options[menu_entry_index] == "start":
+        print("start")
+        startGame()
+    elif options[menu_entry_index] == "quit":
+        print("Goodbye!")
+        time.sleep(1)
+        exit()
+    elif options[menu_entry_index] == "difficulty":
+        setDifficulty()
 
 
 def setDifficulty():
@@ -89,22 +112,6 @@ def setDifficulty():
         print("\nDifficulty set to hard.")
         time.sleep(1)
         secondary()
-
-
-def preStart():
-    # help menu for before the game is started
-    print(figlet_format("Menu", font='smkeyboard'))
-    options = ["start", "quit", "difficulty"]
-    terminal_menu = TerminalMenu(options)
-    menu_entry_index = terminal_menu.show()
-    if options[menu_entry_index] == "start":
-        print("start")
-        startGame()
-    elif options[menu_entry_index] == "quit":
-        print("Goodbye!")
-        exit()
-    elif options[menu_entry_index] == "difficulty":
-        setDifficulty()
 
 
 def checkForDupe(num1, num2):
@@ -276,7 +283,6 @@ def startGame():
     elif difficulty == "hard":
         numbers = getNumbers(4)
     # starts the game
-    print(numbers)
     print("\nHere are the rules:")
     print(f"You have to guess the {len(numbers)}-digit code.\n" +
           "You have 10 tries to do it.\n" + "The code is made up of numbers 0-7.\n")
@@ -301,8 +307,8 @@ def secondary():
     # this is for when you are sent back to the main menu
     # and avoid the begining 'animations' replaying
     print("\nWelcome to Master Mind!")
-    print("help = menu")
-    print("quit = exit")
+    print("help = game menu")
+    print("quit = exit game")
     print("start = start game")
     usr = input("\n> ")
     usr = usr.lower()
@@ -310,6 +316,7 @@ def secondary():
         preStart()
     if usr == "quit":
         print("Goodbye!")
+        time.sleep(1)
         exit()
     if usr == "start":
         startGame()
@@ -327,7 +334,7 @@ def main():
     time.sleep(1)
     print(mind)
     time.sleep(1)
-    welcome = "Welcome to Master Mind!\nhelp = menu\nquit = exit\nstart = start game"
+    welcome = "Welcome to Master Mind!\nhelp = game menu\nquit = exit game\nstart = start game"
     # 'types' out welcome message
     for letter in welcome:
         time.sleep(0.1)
@@ -339,6 +346,7 @@ def main():
         preStart()
     if usr == "quit":
         print("Goodbye!")
+        time.sleep(1)
         exit()
     if usr == "start":
         startGame()
