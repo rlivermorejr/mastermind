@@ -150,11 +150,11 @@ def askGuess():
     # as well as looks for commands
     global attempts
     if attempts == 0:
-        print("OH NO!")
+        print("\nOH NO!")
         time.sleep(1)
         print("\nYou have run out of attempts!")
         time.sleep(1)
-        print("The correct answer was: " + str(numbers))
+        print("The correct answer was: " + str("".join(numbers)))
         print("Thanks for playing!")
         time.sleep(1)
         secondary()
