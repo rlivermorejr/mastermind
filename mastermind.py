@@ -18,7 +18,7 @@ difficulty = "easy"
 
 def getNumbers(param):
     # gets the numbers from the api
-    # param 1 is for initializating numbers variable
+    # param 1 is for initializing numbers variable
     # 2, 3, and 4 are easy, medium, and hard respectively
     if param == 1:
         pass
@@ -276,6 +276,7 @@ def startGame():
     global guessHist
     guessHist = []
     attempts = 10
+    # api call depending on difficulty
     if difficulty == "easy":
         numbers = getNumbers(2)
     elif difficulty == "medium":
