@@ -1,0 +1,4 @@
+python == 3.9
+requests == 2.27.1
+pyfiglet == 0.8.post1
+simple-term-menu == 1.4.1
