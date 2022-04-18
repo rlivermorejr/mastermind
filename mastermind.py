@@ -45,20 +45,45 @@ attempts = 10
 guessHist = []
 count1 = 0
 count2 = 0
+help = "help"
+quit = "quit"
+restart = "restart"
+continueCommand = "continue"
+history = "history"
+start = "start"
+difficultyString = "difficulty"
+
+# initilize game at the startGame dont pass anything
+# initilize player at startGame (input name)
+# at the end I can define each variable in the class
+# give that player the game
+
+class Game:
+    # class for storing game variables
+    def __init__(self, name, attempts, difficulty, guessHist):
+        self.attempts = attempts
+        self.difficulty = difficulty
+        self.guessHist = guessHist
+
+
+class Player:
+    def __init__(self, name):
+        self.name = name
+        self.games = []
 
 
 def commands():
     # help menu for when game is already started
     global attempts
     print(figlet_format("Menu", font='smkeyboard'))
-    options = ["quit", "history", "restart", "continue"]
+    options = [quit, history, restart, continueCommand]
     terminal_menu = TerminalMenu(options)
     menu_entry_index = terminal_menu.show()
-    if options[menu_entry_index] == "quit":
+    if options[menu_entry_index] == quit:
         print("Goodbye!")
         time.sleep(1)
         exit()
-    elif options[menu_entry_index] == "history":
+    elif options[menu_entry_index] == history:
         if len(guessHist) == 0:
             print("\nno history yet!")
             time.sleep(1)
@@ -67,9 +92,9 @@ def commands():
             print("\n" + str(guessHist) + "\n")
             time.sleep(1)
             commands()
-    elif options[menu_entry_index] == "continue":
+    elif options[menu_entry_index] == continueCommand:
         askGuess()
-    elif options[menu_entry_index] == "restart":
+    elif options[menu_entry_index] == restart:
         attempts = 10
         startGame()
 
@@ -77,17 +102,17 @@ def commands():
 def preStart():
     # help menu for before the game is started
     print(figlet_format("Menu", font='smkeyboard'))
-    options = ["start", "quit", "difficulty"]
+    options = [start, quit, difficultyString]
     terminal_menu = TerminalMenu(options)
     menu_entry_index = terminal_menu.show()
-    if options[menu_entry_index] == "start":
-        print("start")
+    if options[menu_entry_index] == start:
+        print(start)
         startGame()
-    elif options[menu_entry_index] == "quit":
+    elif options[menu_entry_index] == quit:
         print("Goodbye!")
         time.sleep(1)
         exit()
-    elif options[menu_entry_index] == "difficulty":
+    elif options[menu_entry_index] == difficultyString:
         setDifficulty()
 
 
@@ -150,6 +175,7 @@ def askGuess():
     # as well as looks for commands
     global attempts
     if attempts == 0:
+        player = Game(attempts, difficulty, guessHist)
         print("\nOH NO!")
         time.sleep(1)
         print("\nYou have run out of attempts!")
@@ -162,17 +188,17 @@ def askGuess():
                   "attempts remaining: " + str(attempts) + "\n" +
                   "> ")
     guess = guess.lower()
-    if guess == "help":
+    if guess == help:
         commands()
-    elif guess == "history" and len(guessHist) > 0:
+    elif guess == history and len(guessHist) > 0:
         print(guessHist)
         time.sleep(1)
         askGuess()
-    elif guess == "history":
+    elif guess == history:
         print("\nno history yet!")
         time.sleep(1)
         askGuess()
-    elif guess == "quit":
+    elif guess == quit:
         print("Goodbye!")
         time.sleep(1)
         exit()
@@ -234,12 +260,13 @@ def checkGuess(guess):
                 print("Please try again!")
                 time.sleep(1)
                 askGuess()
-            if arrGuess[i] in arrNums and arrGuess[i] != arrNums[i]:
-                # if the guess is in the code and is not in the correct index
-                countX(2)
             if arrGuess[i] == arrNums[i]:
                 # if the guess is in the code and is in the correct index
                 countX(1)
+            else:
+                if arrGuess[i] in arrNums and arrGuess[i] != arrNums[i]:
+                    # if the guess is in the code and is not in the correct index
+                    countX(2)
         # append to history, decrement attempts, and check for duplicate count
         guessHist.append(guess)
         countAttempts()
@@ -276,6 +303,7 @@ def startGame():
     global guessHist
     guessHist = []
     attempts = 10
+
     # api call depending on difficulty
     if difficulty == "easy":
         numbers = getNumbers(2)
@@ -299,6 +327,7 @@ def startGame():
           " help" + "\033[0m" + " at anytime for the menu.")
     time.sleep(2)
     print("Good luck!")
+    print("numbers" + ": " + str(numbers))
     time.sleep(2)
     askGuess()
 
@@ -313,13 +342,13 @@ def secondary():
     print("start = start game")
     usr = input("\n> ")
     usr = usr.lower()
-    if usr == "help":
+    if usr == help:
         preStart()
-    if usr == "quit":
+    if usr == quit:
         print("Goodbye!")
         time.sleep(1)
         exit()
-    if usr == "start":
+    if usr == start:
         startGame()
     else:
         print("\n!!!!!! Invalid command !!!!!!\n")
@@ -343,13 +372,13 @@ def main():
         sys.stdout.flush()
     usr = input("\n> ")
     usr = usr.lower()
-    if usr == "help":
+    if usr == help:
         preStart()
-    if usr == "quit":
+    if usr == quit:
         print("Goodbye!")
         time.sleep(1)
         exit()
-    if usr == "start":
+    if usr == start:
         startGame()
     else:
         print("\n!!!!!! Invalid command !!!!!!\n")
