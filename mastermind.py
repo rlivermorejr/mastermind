@@ -58,6 +58,7 @@ difficultyString = "difficulty"
 # at the end I can define each variable in the class
 # give that player the game
 
+
 class Game:
     # class for storing game variables
     def __init__(self, name, attempts, difficulty, guessHist):
@@ -330,6 +331,10 @@ def startGame():
     print("numbers" + ": " + str(numbers))
     time.sleep(2)
     askGuess()
+
+# input ask for name
+# compare input to names of Player class
+# if existing continue instance of player
 
 
 def secondary():
