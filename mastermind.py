@@ -1,11 +1,13 @@
+from modules.menu import *
+
 # for api calls
 import requests
 # for pausing between prints
 import time
-# for cool banner
-from pyfiglet import figlet_format
 # for the cool menu
 from simple_term_menu import TerminalMenu
+# for cool banner and used for the menu
+from pyfiglet import figlet_format
 
 import sys
 
@@ -73,50 +75,6 @@ class Player:
         self.games = []
 
 
-def commands():
-    # help menu for when game is already started
-    global attempts
-    print(figlet_format("Menu", font='smkeyboard'))
-    options = [quit, history, restart, continueCommand]
-    terminal_menu = TerminalMenu(options)
-    menu_entry_index = terminal_menu.show()
-    if options[menu_entry_index] == quit:
-        print("Goodbye!")
-        time.sleep(1)
-        exit()
-    elif options[menu_entry_index] == history:
-        if len(guessHist) == 0:
-            print("\nno history yet!")
-            time.sleep(1)
-            commands()
-        else:
-            print("\n" + str(guessHist) + "\n")
-            time.sleep(1)
-            commands()
-    elif options[menu_entry_index] == continueCommand:
-        askGuess()
-    elif options[menu_entry_index] == restart:
-        attempts = 10
-        startGame()
-
-
-def preStart():
-    # help menu for before the game is started
-    print(figlet_format("Menu", font='smkeyboard'))
-    options = [start, quit, difficultyString]
-    terminal_menu = TerminalMenu(options)
-    menu_entry_index = terminal_menu.show()
-    if options[menu_entry_index] == start:
-        print(start)
-        startGame()
-    elif options[menu_entry_index] == quit:
-        print("Goodbye!")
-        time.sleep(1)
-        exit()
-    elif options[menu_entry_index] == difficultyString:
-        setDifficulty()
-
-
 def setDifficulty():
     # menu for setting difficulty
     global difficulty
@@ -138,16 +96,6 @@ def setDifficulty():
         print("\nDifficulty set to hard.")
         time.sleep(1)
         secondary()
-
-
-def checkForDupe(num1, num2):
-    # checks for a double count
-    # only implemented for easy atm
-    global count1
-    global count2
-    if num1 == 3 and num2 == 1 and difficulty == "easy":
-        count1 - 1
-        count2 = 0
 
 
 def countAttempts():
@@ -271,7 +219,6 @@ def checkGuess(guess):
         # append to history, decrement attempts, and check for duplicate count
         guessHist.append(guess)
         countAttempts()
-        checkForDupe(count1, count2)
         # prints the correct message depending on
         # the amount of matching numbers
         # and depending on if any match the correct index
