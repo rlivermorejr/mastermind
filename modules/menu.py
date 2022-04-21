@@ -5,50 +5,47 @@ from pyfiglet import figlet_format
 # for the cool menu
 from simple_term_menu import TerminalMenu
 # import modules/objects
-from mastermind import (quit, startGame, setDifficulty, difficultyString,
-                        start, history, continueCommand, restart, guessHist,
-                        askGuess)
+import mastermind as mm
 
 
 def commands():
     # help menu for when game is already started
-    global attempts
     print(figlet_format("Menu", font='smkeyboard'))
-    options = [quit, history, restart, continueCommand]
+    options = [mm.quit, mm.history, mm.restart, mm.continueCommand]
     terminal_menu = TerminalMenu(options)
     menu_entry_index = terminal_menu.show()
-    if options[menu_entry_index] == quit:
+    if options[menu_entry_index] == mm.quit:
         print("Goodbye!")
         time.sleep(1)
         exit()
-    elif options[menu_entry_index] == history:
-        if len(guessHist) == 0:
+    elif options[menu_entry_index] == mm.history:
+        if len(mm.guessHist) == 0:
             print("\nno history yet!")
             time.sleep(1)
             commands()
         else:
-            print("\n" + str(guessHist) + "\n")
+            print("\n" + str(mm.guessHist) + "\n")
             time.sleep(1)
             commands()
-    elif options[menu_entry_index] == continueCommand:
-        askGuess()
-    elif options[menu_entry_index] == restart:
-        attempts = 10
-        startGame()
+    elif options[menu_entry_index] == mm.continueCommand:
+        mm.askGuess()
+    elif options[menu_entry_index] == mm.restart:
+        mm.attempts = 10
+        mm.startGame()
 
 
 def preStart():
     # help menu for before the game is started
     print(figlet_format("Menu", font='smkeyboard'))
-    options = [start, quit, difficultyString]
+    options = [mm.start, mm.quit, mm.difficultyString]
     terminal_menu = TerminalMenu(options)
     menu_entry_index = terminal_menu.show()
-    if options[menu_entry_index] == start:
-        print(start)
-        startGame()
-    elif options[menu_entry_index] == quit:
+    if options[menu_entry_index] == mm.start:
+        print(mm.start)
+        mm.startGame()
+    elif options[menu_entry_index] == mm.quit:
         print("Goodbye!")
         time.sleep(1)
         exit()
-    elif options[menu_entry_index] == difficultyString:
-        setDifficulty()
+    elif options[menu_entry_index] == mm.difficultyString:
+        mm.setDifficulty()

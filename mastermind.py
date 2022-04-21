@@ -1,4 +1,4 @@
-from modules.menu import *
+import modules.menu as m
 
 # for api calls
 import requests
@@ -138,7 +138,7 @@ def askGuess():
                   "> ")
     guess = guess.lower()
     if guess == help:
-        commands()
+        m.commands()
     elif guess == history and len(guessHist) > 0:
         print(guessHist)
         time.sleep(1)
@@ -295,7 +295,7 @@ def secondary():
     usr = input("\n> ")
     usr = usr.lower()
     if usr == help:
-        preStart()
+        m.preStart()
     if usr == quit:
         print("Goodbye!")
         time.sleep(1)
@@ -325,7 +325,7 @@ def main():
     usr = input("\n> ")
     usr = usr.lower()
     if usr == help:
-        preStart()
+        m.preStart()
     if usr == quit:
         print("Goodbye!")
         time.sleep(1)
