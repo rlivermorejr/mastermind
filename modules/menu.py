@@ -49,3 +49,26 @@ def preStart():
         exit()
     elif options[menu_entry_index] == mm.difficultyString:
         mm.setDifficulty()
+
+
+def setDifficulty():
+    # menu for setting difficulty
+    global difficulty
+    options = ["easy", "medium", "hard"]
+    terminal_menu = TerminalMenu(options)
+    menu_entry_index = terminal_menu.show()
+    if options[menu_entry_index] == "easy":
+        difficulty = "easy"
+        print("\nDifficulty set to easy.")
+        time.sleep(1)
+        mm.secondary()
+    elif options[menu_entry_index] == "medium":
+        difficulty = "medium"
+        print("\nDifficulty set to medium.")
+        time.sleep(1)
+        mm.secondary()
+    elif options[menu_entry_index] == "hard":
+        difficulty = "hard"
+        print("\nDifficulty set to hard.")
+        time.sleep(1)
+        mm.secondary()

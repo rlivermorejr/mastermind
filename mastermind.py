@@ -1,11 +1,11 @@
 import modules.menu as m
+import modules.logic as logic
 
 # for api calls
 import requests
 # for pausing between prints
 import time
-# for the cool menu
-from simple_term_menu import TerminalMenu
+
 # for cool banner and used for the menu
 from pyfiglet import figlet_format
 
@@ -41,7 +41,7 @@ def getNumbers(param):
         return num
 
 
-# initialization for rest of variables
+# initialization for variables
 numbers = getNumbers(1)
 attempts = 10
 guessHist = []
@@ -54,6 +54,8 @@ continueCommand = "continue"
 history = "history"
 start = "start"
 difficultyString = "difficulty"
+startBold = "\033[1m"
+endBold = "\033[0m"
 
 # initilize game at the startGame dont pass anything
 # initilize player at startGame (input name)
@@ -73,29 +75,6 @@ class Player:
     def __init__(self, name):
         self.name = name
         self.games = []
-
-
-def setDifficulty():
-    # menu for setting difficulty
-    global difficulty
-    options = ["easy", "medium", "hard"]
-    terminal_menu = TerminalMenu(options)
-    menu_entry_index = terminal_menu.show()
-    if options[menu_entry_index] == "easy":
-        difficulty = "easy"
-        print("\nDifficulty set to easy.")
-        time.sleep(1)
-        secondary()
-    elif options[menu_entry_index] == "medium":
-        difficulty = "medium"
-        print("\nDifficulty set to medium.")
-        time.sleep(1)
-        secondary()
-    elif options[menu_entry_index] == "hard":
-        difficulty = "hard"
-        print("\nDifficulty set to hard.")
-        time.sleep(1)
-        secondary()
 
 
 def countAttempts():
@@ -123,6 +102,7 @@ def askGuess():
     # asks for guess and checks for validity
     # as well as looks for commands
     global attempts
+    global numbers
     if attempts == 0:
         player = Game(attempts, difficulty, guessHist)
         print("\nOH NO!")
@@ -155,92 +135,7 @@ def askGuess():
         print("!!!!!! Invalid command !!!!!!\n")
         time.sleep(1)
         askGuess()
-    checkGuess(guess)
-
-
-def checkGuess(guess):
-    # logic for checking guess
-    global attempts
-    global guessHist
-    global count1
-    global count2
-    global numbers
-    count1 = 0
-    count2 = 0
-    arrGuess = list(guess)
-    arrNums = list(numbers)
-    # correct length check
-    if len(guess) != len(numbers):
-        print("Incorrect amount of numbers entered!")
-        time.sleep(1)
-        askGuess()
-    # check for duplicate guess
-    if guess in guessHist:
-        print("You already guessed that!")
-        time.sleep(1)
-        askGuess()
-    # immediate win check
-    if (attempts == 10 and arrGuess == arrNums):
-        print("You guessed the code correctly and in one attempt!")
-        youre = figlet_format("You're a", font='larry3d')
-        master = figlet_format("Master", font='larry3d', width=200)
-        mind = figlet_format("Mind", font='larry3d')
-        print(youre)
-        time.sleep(2)
-        print(master)
-        time.sleep(1)
-        print(mind)
-        time.sleep(1)
-        secondary()
-    # check for win
-    if (arrGuess == arrNums):
-        print("You guessed the code correctly!")
-        time.sleep(1)
-        print("Only took you " + str(10 - attempts) + " attempt(s)!")
-        time.sleep(1)
-        secondary()
-    else:
-        for i in range(0, len(arrGuess)):
-            if arrGuess[i] == "8" or arrGuess[i] == "9":
-                print("The random number cannot have an 8 or 9!")
-                time.sleep(1)
-                print("Only numbers from 1 to 7 are allowed!")
-                time.sleep(1)
-                print("Please try again!")
-                time.sleep(1)
-                askGuess()
-            if arrGuess[i] == arrNums[i]:
-                # if the guess is in the code and is in the correct index
-                countX(1)
-            else:
-                if arrGuess[i] in arrNums and arrGuess[i] != arrNums[i]:
-                    # if the guess is in the code and is not in the correct index
-                    countX(2)
-        # append to history, decrement attempts, and check for duplicate count
-        guessHist.append(guess)
-        countAttempts()
-        # prints the correct message depending on
-        # the amount of matching numbers
-        # and depending on if any match the correct index
-        if count1 == 0 and count2 == 0:
-            print("You guessed incorrectly!")
-        if count2 == 1 and count1 == 0:
-            # one number right, incorrect index
-            print("You guessed a number correctly!")
-        if count2 > 1 and count1 == 0:
-            # multiple numbers right, incorrect index
-            print("You guessed a few numbers correctly!")
-        if count1 > 0 and count2 == 0:
-            # multiple numbers right, correct index
-            print("You guessed a number correctly and at the correct index!")
-            print("Number(s) at correct index: " + str(count1))
-            print("Number(s) at incorrect index: " + str(count2))
-        if count1 > 0 and count2 > 0:
-            # multiple numbers right, some correct index and some incorrect index
-            print("You guessed a number correctly and at the correct index!")
-            print("Number(s) at correct index: " + str(count1))
-            print("Number(s) at incorrect index: " + str(count2))
-        askGuess()
+    logic.checkGuess(guess)
 
 
 def startGame():
@@ -263,20 +158,21 @@ def startGame():
     print("\nHere are the rules:")
     print(f"You have to guess the {len(numbers)}-digit code.\n" +
           "You have 10 tries to do it.\n" + "The code is made up of numbers 0-7.\n")
-    time.sleep(3)
-    print("The numbers can be" + "\033[1m" + " repeated." + "\033[0m")
-    time.sleep(2)
-    print("The numbers can be in" + "\033[1m" + " any order." + "\033[0m")
-    time.sleep(2)
-    print("You can enter" + "\033[1m" +
-          " quit" + "\033[0m" + " at anytime to exit the game.")
-    time.sleep(2)
-    print("or you can enter" + "\033[1m" +
-          " help" + "\033[0m" + " at anytime for the menu.")
-    time.sleep(2)
+    # time.sleep(3)
+    print("The numbers can be" + startBold + " repeated." + endBold)
+    # time.sleep(2)
+    print("The numbers can be in" + startBold + " any order." + endBold)
+    # time.sleep(2)
+    print("You can enter" + startBold + " quit" + endBold +
+          " at anytime to exit the game.")
+    # time.sleep(2)
+    print("or you can enter" + startBold + " help" + endBold +
+          " at anytime for the menu.")
+    # time.sleep(2)
+    print("Difficulty is set to: " + difficulty)
     print("Good luck!")
     print("numbers" + ": " + str(numbers))
-    time.sleep(2)
+    # time.sleep(2)
     askGuess()
 
 # input ask for name
@@ -313,15 +209,17 @@ def main():
     master = figlet_format("Master", font='isometric4', width=200)
     mind = figlet_format("Mind", font='isometric2')
     print(master)
-    time.sleep(1)
+    # time.sleep(1)
     print(mind)
-    time.sleep(1)
-    welcome = "Welcome to Master Mind!\nhelp = game menu\nquit = exit game\nstart = start game"
+    # time.sleep(1)
+    welcome = ("Welcome to Master Mind!\nhelp = game menu\nquit = \
+exit game\nstart = start game")
+    print(welcome)
     # 'types' out welcome message
-    for letter in welcome:
-        time.sleep(0.1)
-        sys.stdout.write(letter)
-        sys.stdout.flush()
+    # for letter in welcome:
+    #     time.sleep(0.1)
+    #     sys.stdout.write(letter)
+    #     sys.stdout.flush()
     usr = input("\n> ")
     usr = usr.lower()
     if usr == help:
