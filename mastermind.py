@@ -9,13 +9,10 @@ import time
 # for cool banner and used for the menu
 from pyfiglet import figlet_format
 
-import sys
+# import sys
 
 
 __author__ = "Russell Livermore"
-
-# initializes difficulty variable
-difficulty = "easy"
 
 
 def getNumbers(param):
@@ -104,7 +101,7 @@ def askGuess():
     global attempts
     global numbers
     if attempts == 0:
-        player = Game(attempts, difficulty, guessHist)
+        # player = Game(attempts, difficulty, guessHist)
         print("\nOH NO!")
         time.sleep(1)
         print("\nYou have run out of attempts!")
@@ -135,24 +132,23 @@ def askGuess():
         print("!!!!!! Invalid command !!!!!!\n")
         time.sleep(1)
         askGuess()
-    logic.checkGuess(guess)
+    logic.checkGuess(guess, numbers)
 
 
 def startGame():
     # starts the game and checks difficulty level
     global numbers
-    global difficulty
     global attempts
     global guessHist
     guessHist = []
     attempts = 10
 
     # api call depending on difficulty
-    if difficulty == "easy":
+    if m.difficulty == "easy":
         numbers = getNumbers(2)
-    elif difficulty == "medium":
+    elif m.difficulty == "medium":
         numbers = getNumbers(3)
-    elif difficulty == "hard":
+    elif m.difficulty == "hard":
         numbers = getNumbers(4)
     # starts the game
     print("\nHere are the rules:")
@@ -169,7 +165,7 @@ def startGame():
     print("or you can enter" + startBold + " help" + endBold +
           " at anytime for the menu.")
     # time.sleep(2)
-    print("Difficulty is set to: " + difficulty)
+    print("Difficulty is set to: " + m.difficulty)
     print("Good luck!")
     print("numbers" + ": " + str(numbers))
     # time.sleep(2)

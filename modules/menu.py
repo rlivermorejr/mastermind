@@ -7,6 +7,8 @@ from simple_term_menu import TerminalMenu
 # import modules/objects
 import mastermind as mm
 
+difficulty = "easy"
+
 
 def commands():
     # help menu for when game is already started
@@ -48,7 +50,7 @@ def preStart():
         time.sleep(1)
         exit()
     elif options[menu_entry_index] == mm.difficultyString:
-        mm.setDifficulty()
+        setDifficulty()
 
 
 def setDifficulty():

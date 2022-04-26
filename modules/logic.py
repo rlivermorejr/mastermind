@@ -6,7 +6,7 @@ from pyfiglet import figlet_format
 import time
 
 
-def checkGuess(guess):
+def checkGuess(guess, numbers):
     # logic for checking guess
     global attempts
     global guessHist
@@ -15,9 +15,9 @@ def checkGuess(guess):
     mm.count1 = 0
     mm.count2 = 0
     arrGuess = list(guess)
-    # arrNums = list(numbers)
+    arrNums = list(numbers)
     # correct length check
-    if len(guess) != len(mm.numbers):
+    if len(guess) != len(numbers):
         print("Incorrect amount of numbers entered!")
         time.sleep(1)
         mm.askGuess()
@@ -27,7 +27,7 @@ def checkGuess(guess):
         time.sleep(1)
         mm.askGuess()
     # immediate win check
-    if (mm.attempts == 10 and arrGuess == mm.numbers):
+    if (mm.attempts == 10 and arrGuess == arrNums):
         print("You guessed the code correctly and in one attempt!")
         youre = figlet_format("You're a", font='larry3d')
         master = figlet_format("Master", font='larry3d', width=200)
@@ -40,7 +40,7 @@ def checkGuess(guess):
         time.sleep(1)
         mm.secondary()
     # check for win
-    if (arrGuess == mm.numbers):
+    if (arrGuess == arrNums):
         print("You guessed the code correctly!")
         time.sleep(1)
         print("Only took you " + str(10 - mm.attempts) + " attempt(s)!")
@@ -56,11 +56,11 @@ def checkGuess(guess):
                 print("Please try again!")
                 time.sleep(1)
                 mm.askGuess()
-            if arrGuess[i] == mm.numbers[i]:
+            if arrGuess[i] == arrNums[i]:
                 # if the guess is in the code and is in the correct index
                 mm.countX(1)
             else:
-                if arrGuess[i] in mm.numbers and arrGuess[i] != mm.numbers[i]:
+                if arrGuess[i] in arrNums and arrGuess[i] != arrNums[i]:
                     # if the guess is in the code and is not in the correct index
                     mm.countX(2)
         # append to history, decrement attempts, and check for duplicate count
