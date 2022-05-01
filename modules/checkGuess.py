@@ -6,7 +6,7 @@ from pyfiglet import figlet_format
 import time
 
 
-def checkGuess(guess, numbers):
+def checkGuess(guess, numbers, player):
     # logic for checking guess
     global attempts
     global guessHist
@@ -20,12 +20,12 @@ def checkGuess(guess, numbers):
     if len(guess) != len(numbers):
         print("Incorrect amount of numbers entered!")
         time.sleep(1)
-        mm.askGuess(numbers)
+        mm.askGuess(numbers, player)
     # check for duplicate guess
     if guess in mm.guessHist:
         print("You already guessed that!")
         time.sleep(1)
-        mm.askGuess(numbers)
+        mm.askGuess(numbers, player)
     # immediate win check
     if (mm.attempts == 10 and arrGuess == arrNums):
         print("You guessed the code correctly and in one attempt!")
@@ -55,7 +55,7 @@ def checkGuess(guess, numbers):
                 time.sleep(1)
                 print("Please try again!")
                 time.sleep(1)
-                mm.askGuess(numbers)
+                mm.askGuess(numbers, player)
             if arrGuess[i] == arrNums[i]:
                 # if the guess is in the code and is in the correct index
                 mm.countX(1)
@@ -87,4 +87,4 @@ def checkGuess(guess, numbers):
             print("You guessed a number correctly and at the correct index!")
             print("Number(s) at correct index: " + str(mm.count1))
             print("Number(s) at incorrect index: " + str(mm.count2))
-        mm.askGuess(numbers)
+        mm.askGuess(numbers, player)

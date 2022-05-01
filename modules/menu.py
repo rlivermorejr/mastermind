@@ -10,7 +10,7 @@ import mastermind as mm
 difficulty = "easy"
 
 
-def commands():
+def commands(numbers, player):
     # help menu for when game is already started
     print(figlet_format("Menu", font='smkeyboard'))
     options = [mm.quit, mm.history, mm.restart, mm.continueCommand]
@@ -24,13 +24,13 @@ def commands():
         if len(mm.guessHist) == 0:
             print("\nno history yet!")
             time.sleep(1)
-            commands()
+            commands(numbers, player)
         else:
             print("\n" + str(mm.guessHist) + "\n")
             time.sleep(1)
-            commands()
+            commands(numbers, player)
     elif options[menu_entry_index] == mm.continueCommand:
-        mm.askGuess()
+        mm.askGuess(numbers, player)
     elif options[menu_entry_index] == mm.restart:
         mm.attempts = 10
         mm.startGame()

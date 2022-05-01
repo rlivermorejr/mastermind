@@ -96,7 +96,7 @@ def countX(param):
         return count2
 
 
-def askGuess(numbers):
+def askGuess(numbers, player):
     # asks for guess and checks for validity
     # as well as looks for commands
     global attempts
@@ -110,21 +110,21 @@ def askGuess(numbers):
         print("The correct answer was: " + str("".join(numbers)))
         print("Thanks for playing!")
         time.sleep(1)
-        secondary()
+        secondary(player)
     guess = input("\nEnter your guess...\n" +
                   "attempts remaining: " + str(attempts) + "\n" +
                   "> ")
     guess = guess.lower()
     if guess == help:
-        m.commands()
+        m.commands(numbers, player)
     elif guess == history and len(guessHist) > 0:
         print(guessHist)
         time.sleep(1)
-        askGuess()
+        askGuess(numbers, player)
     elif guess == history:
         print("\nno history yet!")
         time.sleep(1)
-        askGuess()
+        askGuess(numbers, player)
     elif guess == quit:
         print("Goodbye!")
         time.sleep(1)
@@ -132,11 +132,11 @@ def askGuess(numbers):
     elif not guess.isnumeric():
         print("!!!!!! Invalid command !!!!!!\n")
         time.sleep(1)
-        askGuess()
-    checkGuess.checkGuess(guess, numbers)
+        askGuess(numbers, player)
+    checkGuess.checkGuess(guess, numbers, player)
 
 
-def startGame(player):
+def startGame():
     # starts the game and checks difficulty level
     global attempts
     global guessHist
@@ -150,6 +150,7 @@ def startGame(player):
     elif m.difficulty == "hard":
         numbers = getNumbers(4)
     # starts the game
+    player = Player(input("\nEnter your name...\n> "))
     print("\nHere are the rules:")
     print(f"You have to guess the {len(numbers)}-digit code.\n" +
           "You have 10 tries to do it.\n" + "The code is made up of numbers 0-7.\n")
@@ -168,7 +169,7 @@ def startGame(player):
     print("Good luck!")
     print("numbers" + ": " + str(numbers))
     # time.sleep(2)
-    askGuess(numbers)
+    askGuess(numbers, player)
 
 # input ask for name
 # compare input to names of Player class
@@ -224,8 +225,7 @@ exit game\nstart = start game")
         time.sleep(1)
         exit()
     if usr == start:
-        player = Player(input("\nEnter your name...\n> "))
-        startGame(player)
+        startGame()
     else:
         print("\n!!!!!! Invalid command !!!!!!\n")
         time.sleep(1)
