@@ -1,5 +1,5 @@
 import modules.menu as m
-import modules.logic as logic
+import modules.checkGuess as checkGuess
 
 # for api calls
 import requests
@@ -39,7 +39,7 @@ def getNumbers(param):
 
 
 # initialization for variables
-numbers = getNumbers(1)
+# numbers = getNumbers(1)
 attempts = 10
 guessHist = []
 count1 = 0
@@ -69,6 +69,7 @@ class Game:
 
 
 class Player:
+    # class for storing player variables
     def __init__(self, name):
         self.name = name
         self.games = []
@@ -95,13 +96,13 @@ def countX(param):
         return count2
 
 
-def askGuess():
+def askGuess(numbers):
     # asks for guess and checks for validity
     # as well as looks for commands
     global attempts
-    global numbers
+    print(numbers)
     if attempts == 0:
-        # player = Game(attempts, difficulty, guessHist)
+        # game = Game(attempts, difficulty, guessHist)
         print("\nOH NO!")
         time.sleep(1)
         print("\nYou have run out of attempts!")
@@ -132,17 +133,15 @@ def askGuess():
         print("!!!!!! Invalid command !!!!!!\n")
         time.sleep(1)
         askGuess()
-    logic.checkGuess(guess, numbers)
+    checkGuess.checkGuess(guess, numbers)
 
 
-def startGame():
+def startGame(player):
     # starts the game and checks difficulty level
-    global numbers
     global attempts
     global guessHist
     guessHist = []
     attempts = 10
-
     # api call depending on difficulty
     if m.difficulty == "easy":
         numbers = getNumbers(2)
@@ -169,7 +168,7 @@ def startGame():
     print("Good luck!")
     print("numbers" + ": " + str(numbers))
     # time.sleep(2)
-    askGuess()
+    askGuess(numbers)
 
 # input ask for name
 # compare input to names of Player class
@@ -225,7 +224,8 @@ exit game\nstart = start game")
         time.sleep(1)
         exit()
     if usr == start:
-        startGame()
+        player = Player(input("\nEnter your name...\n> "))
+        startGame(player)
     else:
         print("\n!!!!!! Invalid command !!!!!!\n")
         time.sleep(1)

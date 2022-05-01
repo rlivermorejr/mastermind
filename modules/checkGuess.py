@@ -20,12 +20,12 @@ def checkGuess(guess, numbers):
     if len(guess) != len(numbers):
         print("Incorrect amount of numbers entered!")
         time.sleep(1)
-        mm.askGuess()
+        mm.askGuess(numbers)
     # check for duplicate guess
     if guess in mm.guessHist:
         print("You already guessed that!")
         time.sleep(1)
-        mm.askGuess()
+        mm.askGuess(numbers)
     # immediate win check
     if (mm.attempts == 10 and arrGuess == arrNums):
         print("You guessed the code correctly and in one attempt!")
@@ -55,7 +55,7 @@ def checkGuess(guess, numbers):
                 time.sleep(1)
                 print("Please try again!")
                 time.sleep(1)
-                mm.askGuess()
+                mm.askGuess(numbers)
             if arrGuess[i] == arrNums[i]:
                 # if the guess is in the code and is in the correct index
                 mm.countX(1)
@@ -87,4 +87,4 @@ def checkGuess(guess, numbers):
             print("You guessed a number correctly and at the correct index!")
             print("Number(s) at correct index: " + str(mm.count1))
             print("Number(s) at incorrect index: " + str(mm.count2))
-        mm.askGuess()
+        mm.askGuess(numbers)
